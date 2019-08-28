@@ -151,7 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="PArray.cpp" />
+    <ClCompile Include="Point.cpp" />
     <ClCompile Include="PointArray.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PArray.h" />
+    <ClInclude Include="Point.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
