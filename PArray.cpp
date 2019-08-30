@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
+#include <iostream>
 PArray::PArray() {
 	this->m_size = 0;
 	this->m_array_points = nullptr;
@@ -26,25 +26,34 @@ PArray::~PArray() {
 }
 void PArray::resize(const int t_new_size) {
 	if (this->m_array_points != nullptr) {
-		Point* Arr = new Point[t_new_size];
-		Arr = (Point*)malloc(sizeof(Point) * t_new_size);
-		memcpy(Arr, this->m_array_points, sizeof(Point) * this->m_size);
-		this->m_array_points = Arr;
+		
+		this->m_array_points = (Point*)realloc(this->m_array_points, sizeof(Point) * t_new_size);
+		
 		this->m_size = t_new_size;
-		delete []Arr;
+		
 	}
 }
 void PArray::push_back(const Point& t_point) {
 	if (this->m_array_points == nullptr)
 	{
-		this->m_array_points = (Point*)malloc(sizeof(Point) * 1);
-		m_array_points[0] = t_point;
+		this->m_array_points = (Point*) malloc(sizeof(Point));
+		if (m_array_points == nullptr) /* Memory allocation fails */
+		{
+			std::cout << "Could not allocate memory" << std::endl;
+		}
+		else {
+			std::cout << "Could allocate memory" << std::endl;
+		}
+		this->m_array_points[0] = t_point;
+		this->m_size += 1;
 	}
 	else {
-		this->resize(this->m_size++);
+		int x = m_size + 1;
+		this->resize(x);
+		//this->m_size += 1;
+		x = m_size - 1;
+		this->m_array_points[x] = t_point;
 		
-		this->m_array_points[this->m_size] = t_point;
-		this->m_size += 1;
 	}
 }
 int PArray::get_size() const {
@@ -79,4 +88,8 @@ void PArray::clear() {
 		this->remove(this->m_size--);
 	}
 
+}
+void PArray::get_point(int x)
+{
+	std::cout<< this->m_array_points[x].get_pos_x()<< std::endl;
 }

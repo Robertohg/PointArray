@@ -21,6 +21,7 @@ public:
 	//Removes element in give position
 	void remove(const int t_position);
 	//Returns size
+	void get_point(int x);
 	int get_size() const;
 	//Clears Array
 	void clear();

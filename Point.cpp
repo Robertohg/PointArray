@@ -7,7 +7,6 @@ Point::Point() {
 Point::Point(int t_pos_x, int t_pos_y) {
 	this->m_pos_x = t_pos_x;
 	this->m_pos_y = t_pos_y;
-
 }
 void Point::set_pos_x(const int t_pos_x) {
 	this->m_pos_x = t_pos_x;
