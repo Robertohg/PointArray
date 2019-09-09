@@ -20,8 +20,10 @@ public:
 	void insert(const int t_position, const Point& t_point);
 	//Removes element in give position
 	void remove(const int t_position);
+	
+	Point *get_point(int t_pos);
+	Point *get_point(int  t_pos) const;
 	//Returns size
-	void get_point(int x);
 	int get_size() const;
 	//Clears Array
 	void clear();

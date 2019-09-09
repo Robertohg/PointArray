@@ -4,6 +4,7 @@
 #include <string>
 #include "Point.h"
 #include "PArray.h"
+include "Polygon.h"
 #include <iostream>
 
 int main()

@@ -9,87 +9,71 @@ PArray::PArray() {
 	this->m_array_points = nullptr;
 }
 PArray::PArray(const Point t_array_points[], const int t_size) {
+
 	this->m_size = t_size;
-	this->m_array_points = (Point*)malloc(sizeof(Point) * t_size);
-	memcpy(m_array_points, t_array_points, sizeof(Point) * t_size);
+	this->m_array_points = new Point[t_size];
+	for (int i = 0; i < t_size; i++) {
+		this->m_array_points[i] = t_array_points[i];
+	}
 
 }
 PArray::PArray(const PArray& t_points_array) {
 	this->m_size = t_points_array.m_size;
-	this->m_array_points = (Point*)malloc(sizeof(Point) * m_size);
-	memcpy(m_array_points, t_points_array.m_array_points, sizeof(Point) * m_size);
 
+	this->m_array_points = new Point[m_size];
+	for (int i = 0; i < m_size; i++) {
+		this->m_array_points[i] = t_points_array.m_array_points[i];
+	}
 }
 PArray::~PArray() {
 	free(this->m_array_points);
 	delete m_array_points;
 }
 void PArray::resize(const int t_new_size) {
-	if (this->m_array_points != nullptr) {
-		
-		this->m_array_points = (Point*)realloc(this->m_array_points, sizeof(Point) * t_new_size);
-		
-		this->m_size = t_new_size;
-		
+
+	Point *buff = new Point[t_new_size];
+	int minSize = (t_new_size > this->m_size ? this->m_size : t_new_size);
+	for (int i = 0; i < minSize; i++) {
+		buff[i] = this->m_array_points[i];
 	}
+	delete[] this->m_array_points;
+	this->m_size = t_new_size;
+	this->m_array_points = buff;
+	
 }
 void PArray::push_back(const Point& t_point) {
-	if (this->m_array_points == nullptr)
-	{
-		this->m_array_points = (Point*) malloc(sizeof(Point));
-		if (m_array_points == nullptr) /* Memory allocation fails */
-		{
-			std::cout << "Could not allocate memory" << std::endl;
-		}
-		else {
-			std::cout << "Could allocate memory" << std::endl;
-		}
-		this->m_array_points[0] = t_point;
-		this->m_size += 1;
-	}
-	else {
-		int x = m_size + 1;
-		this->resize(x);
-		//this->m_size += 1;
-		x = m_size - 1;
-		this->m_array_points[x] = t_point;
-		
-	}
+	resize(this->m_size + 1);
+	m_array_points[this->m_size - 1] = t_point;
+
 }
 int PArray::get_size() const {
 	return this->m_size;
 }
 void PArray::insert(const int t_position, const Point& t_point) {
-	
-	if (this->m_array_points == nullptr)
-	{
-		int poss = t_position + 1;
-		this->m_array_points = (Point*)malloc(sizeof(Point) * poss);
-		this->m_array_points[t_position] = t_point;
+	resize(this->m_size + 1);
+	for (int i = this->m_size - 1; i > t_position; i--) {
+		this->m_array_points[i] = this->m_array_points[i - 1];
 	}
-	else {
-		int poss = this->m_size++;
-		this->resize(poss);
-		for (int iter = this->m_size--; t_position <= iter; iter--) {
-			this->m_array_points[iter] = this->m_array_points[iter--];
-		}
-		this->m_array_points[t_position] = t_point;
-	}
-}
-void PArray::remove(const int t_position) {
-	for (int iter = t_position; t_position < this->m_size; iter++) {
-		this->m_array_points[iter] = this->m_array_points[iter++];
-	}
-	this->resize(this->m_size--);
-}
-void PArray::clear() {
-	while (this->m_array_points!= nullptr)
-	{
-		this->remove(this->m_size--);
-	}
+	this->m_array_points[t_position] = t_point;
+
 
 }
-void PArray::get_point(int x)
+void PArray::remove(const int t_position) {
+	for (int i = t_position; i < this->m_size - 2; i++)
+	{
+		m_array_points[i] = m_array_points[i + 1];
+	}
+	resize(this->m_size - 1);
+}
+void PArray::clear() {
+	resize(0);
+
+}
+Point *PArray::get_point(int t_pos)
 {
-	std::cout<< this->m_array_points[x].get_pos_x()<< std::endl;
+	return t_pos >= 0 && t_pos < m_size ? m_array_points + t_pos : NULL;
+}
+Point* PArray::get_point(int t_pos) const
+{
+	return t_pos >= 0 && t_pos < m_size ? m_array_points + t_pos : NULL;
 }
