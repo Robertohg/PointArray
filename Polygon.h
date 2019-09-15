@@ -17,13 +17,46 @@ public:
 };
 class Rectangle : public Polygon {
 public:
-	
 	Rectangle(const int a, const int b, const int c, const int d);
 	virtual double area() const;
+	double perimetro() const;
+};
+
+class Pentagon :public Polygon {
+public:
+	Pentagon(const int a, const int b, const int c, const int d);
+	virtual double area() const;
+	double perimetro() const;
+
 };
 
 class Triangle : public Polygon {
 public:
 	Triangle(const Point& a, const Point& b, const Point& c);
 	virtual double area() const;
+	double perimetro() const;
+};
+class Isoceles : public Polygon {
+	Isoceles(const Point& a, const Point& b, const Point& c);
+	 double area() const;
+	 double perimetro() const;
+ };
+
+class Equilatero : public Polygon {
+	Equilatero(const Point& a, const Point& b, const Point& c);
+	 double area() const;
+	 double perimetro() const;
+};
+
+class Circulo : public Polygon {
+	Circulo(const Point& a, const Point& b);
+	 double area() const;
+	 double perimetro() const;
+};
+
+class Comida {
+	virtual void preparar() = 0;
+};
+class Pizza : public Circulo, public Comida {
+	Pizza(const Point& a, const Point& b);
 };
